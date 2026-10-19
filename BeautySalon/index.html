@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Орхидея — студия маникюра</title>
+<meta name="description" content="Студия маникюра «Орхидея»: маникюр, педикюр, дизайн ногтей. Запись по телефону.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="top">
+  <a class="logo" href="#hero">Орхидея</a>
+  <nav>
+    <a href="#services">Услуги</a>
+    <a href="#works">Работы</a>
+    <a href="#contacts">Контакты</a>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div class="drops" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <div class="hero__text">
+      <p class="hero__tag">Студия маникюра</p>
+      <h1>Ногти, на которые хочется смотреть</h1>
+      <p class="hero__lead">Маникюр, педикюр и дизайн в спокойной студии. Запись на сегодня — по звонку.</p>
+      <div class="actions">
+        <a class="btn btn--main" href="tel:+4969000000">
+          <svg viewBox="0 0 24 24"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11 11 0 0 0 3.5.55 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.2.2 2.4.55 3.5a1 1 0 0 1-.25 1z"/></svg>
+          Позвонить
+        </a>
+        <a class="btn btn--ghost" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Berger+Stra%C3%9Fe+100+Frankfurt+am+Main">
+          <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.500a2.500 2.500 0 0 1 0 5z"/></svg>
+          Маршрут
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section">
+    <h2>Услуги и цены</h2>
+    <ul class="prices">
+      <li class><span>Маникюр классический</span><b>от 30 <span class="nbrb-icon">BYN</span></b></li>
+      <li><span>Маникюр + покрытие гель-лак</span><b>от 45 <span class="nbrb-icon">BYN</span></b></li>
+      <li><span>Дизайн (1 ноготь)</span><b>от 3 <span class="nbrb-icon">BYN</span></b></li>
+      <li><span>Педикюр + покрытие</span><b>от 55 <span class="nbrb-icon">BYN</span></b></li>
+      <li><span>Снятие и уход</span><b>от 12 <span class="nbrb-icon">BYN</span></b></li>
+    </ul>
+  </section>
+
+  <!-- SLIDER -->
+  <section id="works" class="section section--tint">
+    <h2>Наши работы</h2>
+    <div class="slider" aria-roledescription="carousel" aria-label="Фото работ">
+      <div class="slider__track">
+        <figure class="slide s1"><span>Нюд и глянец</span></figure>
+        <figure class="slide s2"><span>Орхидея на розовом</span></figure>
+        <figure class="slide s3"><span>Фисташковый градиент</span></figure>
+        <figure class="slide s4"><span>Французский с золотом</span></figure>
+      </div>
+      <button class="slider__btn prev" aria-label="Предыдущее фото">‹</button>
+      <button class="slider__btn next" aria-label="Следующее фото">›</button>
+      <div class="slider__dots" role="tablist"></div>
+    </div>
+  </section>
+
+  <!-- CONTACTS -->
+  <section id="contacts" class="section">
+    <h2>Напишите нам</h2>
+    <p class="muted">Ответим в мессенджере в течение часа с 10:00 до 20:00.</p>
+    <ul class="socials">
+      <li><a href="https://instagram.com/" target="_blank" rel="noopener" class="soc soc--ig">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.500" cy="6.500" r="1" fill="currentColor"/></svg>
+        <span>Instagram</span></a></li>
+      <li><a href="https://t.me/" target="_blank" rel="noopener" class="soc soc--tg">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M21.500 3.500 2.500 10.800c-.8.3-.8 1.400 0 1.600l4.700 1.500 1.800 5.600c.2.600 1 .8 1.400.3l2.600-2.500 4.800 3.500c.6.400 1.400.1 1.500-.6l3-16c.1-.8-.6-1.400-1.300-1.100zM9 14l8.500-6.200-6.700 7.300-.3 2.800z"/></svg>
+        <span>Telegram</span></a></li>
+      <li><a href="https://wa.me/4969000000" target="_blank" rel="noopener" class="soc soc--wa">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M3 21l1.500-5A9 9 0 1 1 8 19.500z"/><path d="M9 8.500c0 3.500 3 6.500 6.500 6.500l1-1.500-2-1-1 .8c-1-.5-1.800-1.300-2.300-2.300l.8-1-1-2z" fill="currentColor"/></svg>
+        <span>WhatsApp</span></a></li>
+      <li><a href="https://vk.com/" target="_blank" rel="noopener" class="soc soc--vk">
+        <svg viewBox="0 0 24 24"><text x="12" y="16.500" text-anchor="middle" font-family="Unbounded, sans-serif" font-size="10" font-weight="700" fill="currentColor">VK</text><rect x="2.500" y="2.500" width="19" height="19" rx="5" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        <span>ВКонтакте</span></a></li>
+    </ul>
+    <address>г. Минск, ул.Независимости 1<br>Ежедневно 10:00–20:00</address>
+  </section>
+</main>
+
+<footer>© <span id="year"></span> Орхидея · студия маникюра</footer>
+
+<!-- Мобильная панель быстрых действий -->
+<div class="dock">
+  <a href="tel:+4969000000">Позвонить</a>
+  <a target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Berger+Stra%C3%9Fe+100+Frankfurt+am+Main">Маршрут</a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
