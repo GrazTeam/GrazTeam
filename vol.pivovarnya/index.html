@@ -286,6 +286,216 @@
   }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 </style>
+<script>
+  /* Анимации включаются только если пользователь не просил уменьшить движение */
+  if (!window.matchMedia || !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('js-anim');
+  }
+</script>
+<style>
+  /* ---------- Первый экран: медленный «наезд» камеры на фото ---------- */
+  .js-anim .hero { background-image: none; isolation: isolate; overflow: hidden; }
+  .js-anim .hero::before {
+    content: ""; position: absolute; inset: -2%; z-index: -2;
+    background: var(--hero-img) center / cover no-repeat;
+    animation: va-kenburns 26s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+  .js-anim .hero::after {
+    content: ""; position: absolute; inset: 0; z-index: -1;
+    background: linear-gradient(180deg, rgba(16,34,30,.42) 0%, rgba(16,34,30,.8) 58%, #10221E 100%);
+  }
+  @media (min-width: 860px) {
+    .js-anim .hero::after {
+      background: linear-gradient(90deg, rgba(16,34,30,.95) 0%, rgba(16,34,30,.78) 46%, rgba(16,34,30,.3) 100%);
+    }
+  }
+  .js-anim .hero .wrap { position: relative; z-index: 1; }
+
+  /* Поочерёдное появление текста на первом экране */
+  .js-anim .hero h1,
+  .js-anim .hero h1 span,
+  .js-anim .hero .lead,
+  .js-anim .hero .status,
+  .js-anim .hero .actions,
+  .js-anim .hero .book { animation: va-up .9s cubic-bezier(.2,.7,.2,1) both; }
+  .js-anim .hero h1 { animation-delay: .1s; }
+  .js-anim .hero h1 span { animation-delay: .3s; }
+  .js-anim .hero .lead { animation-delay: .5s; }
+  .js-anim .hero .status { animation-delay: .65s; }
+  .js-anim .hero .actions { animation-delay: .8s; }
+  .js-anim .hero .book { animation-delay: .95s; }
+  .js-anim .hero .book:last-child { animation-delay: 1.05s; }
+
+  /* Пузырьки, поднимающиеся как в бокале */
+  .va-bubbles { position: absolute; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+  .va-bubbles span {
+    position: absolute; bottom: -30px; border-radius: 50%; opacity: 0;
+    border: 1.5px solid rgba(224,160,48,.55);
+    background: radial-gradient(circle at 30% 30%, rgba(246,240,223,.4), rgba(224,160,48,.08) 60%);
+    animation: va-rise linear infinite;
+  }
+
+  /* Подсказка «листайте вниз» (только на широких экранах) */
+  .va-cue { display: none; }
+  @media (min-width: 860px) {
+    .va-cue {
+      display: block; position: absolute; left: 50%; bottom: 22px; z-index: 1;
+      width: 30px; height: 48px; margin-left: -15px;
+      border: 2px solid rgba(246,240,223,.55); border-radius: 18px;
+      animation: va-fade 1s 1.5s both;
+    }
+    .va-cue::before {
+      content: ""; position: absolute; left: 50%; top: 9px;
+      width: 6px; height: 10px; margin-left: -3px; border-radius: 3px;
+      background: var(--ale); animation: va-wheel 1.8s ease-in-out infinite;
+    }
+    .va-cue:hover { border-color: var(--ale); }
+  }
+
+  /* Пульсирующая точка «Открыто» */
+  .status i { transition: background-color .4s; }
+  .js-anim .status[data-open="yes"] i { animation: va-ping 2s ease-out infinite; }
+
+  /* ---------- Полоса прогресса прокрутки ---------- */
+  .va-progress {
+    position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 30;
+    background: var(--ale); transform-origin: 0 50%; transform: scaleX(0);
+    pointer-events: none;
+  }
+
+  /* ---------- Кнопки ---------- */
+  .js-anim .btn {
+    position: relative; overflow: hidden;
+    transition: transform .25s cubic-bezier(.2,.7,.2,1), box-shadow .25s, background-color .25s, color .25s;
+  }
+  .js-anim .btn-main::after {
+    content: ""; position: absolute; top: 0; left: -60%; width: 40%; height: 100%;
+    background: linear-gradient(100deg, transparent, rgba(255,255,255,.5), transparent);
+    transform: skewX(-20deg); transition: left .7s ease;
+  }
+  .js-anim .btn:active { transform: translateY(0) scale(.97); }
+  @media (hover: hover) {
+    .js-anim .btn:hover { transform: translateY(-3px); box-shadow: 0 12px 26px -12px rgba(0,0,0,.6); }
+    .js-anim .btn-main:hover::after { left: 130%; }
+    .js-anim .btn-alt:hover { background-color: var(--ale); color: var(--stout); }
+  }
+
+  /* Подчёркивание телефонов при наведении */
+  .js-anim .contact a,
+  .js-anim .hero .book a {
+    background: linear-gradient(var(--ale), var(--ale)) 0 100% / 0 2px no-repeat;
+    transition: background-size .35s ease;
+  }
+  @media (hover: hover) {
+    .js-anim .contact a:hover,
+    .js-anim .hero .book a:hover { background-size: 100% 2px; }
+  }
+
+  /* ---------- Появление блоков при прокрутке ---------- */
+  .js-anim main { overflow-x: hidden; overflow-x: clip; }
+  .js-anim [data-va] {
+    opacity: 0;
+    transition: opacity .9s cubic-bezier(.2,.7,.2,1), transform .9s cubic-bezier(.2,.7,.2,1);
+    transition-delay: var(--d, 0s);
+  }
+  .js-anim [data-va="up"]   { transform: translateY(32px); }
+  .js-anim [data-va="left"] { transform: translateX(-36px); }
+  .js-anim [data-va="zoom"] { transform: scale(.94); }
+  .js-anim [data-va].va-in  { opacity: 1; transform: none; }
+
+  /* Фотографии: «шторка» цвета эля открывает снимок, затем выезжает тень */
+  .js-anim [data-va="img"] { opacity: 1; transform: none; position: relative; }
+  .js-anim [data-va="img"]::after {
+    content: ""; position: absolute; inset: 0; z-index: 1; border-radius: 6px;
+    background: var(--ale); transform-origin: right center; transform: scaleX(1);
+    transition: transform 1.05s cubic-bezier(.77,0,.18,1) .1s;
+  }
+  .js-anim [data-va="img"].va-in::after { transform: scaleX(0); }
+  .js-anim figure.ph img { box-shadow: 0 0 0 var(--ale); transition: box-shadow .6s ease 1s, transform .35s ease; }
+  .js-anim figure.ph.va-in img { box-shadow: 10px 10px 0 var(--ale); }
+  .js-anim figure.ph.va-done img { transition: box-shadow .35s ease, transform .35s ease; }
+  @media (min-width: 860px) {
+    .js-anim figure.ph.va-in img { box-shadow: 14px 14px 0 var(--ale); }
+  }
+  @media (hover: hover) {
+    .js-anim figure.ph.va-done:hover img { transform: translate(-4px, -4px); box-shadow: 16px 16px 0 var(--ale); }
+  }
+  @media (hover: hover) and (min-width: 860px) {
+    .js-anim figure.ph.va-done:hover img { box-shadow: 20px 20px 0 var(--ale); }
+  }
+
+  /* Меню: маркер и сдвиг при наведении */
+  .js-anim .menu-list li { position: relative; }
+  .js-anim .menu-list li.va-in { transition: opacity .9s, transform .9s, padding-left .3s, color .3s; transition-delay: var(--d,0s), var(--d,0s), 0s, 0s; }
+  .js-anim .menu-list li::before {
+    content: ""; position: absolute; left: 0; top: 50%; width: 0; height: 2px;
+    background: var(--ale); transition: width .3s;
+  }
+  @media (hover: hover) {
+    .js-anim .menu-list li:hover { padding-left: 22px; color: var(--ale); }
+    .js-anim .menu-list li:hover::before { width: 12px; }
+  }
+
+  /* ---------- Субботняя вечеринка: живой свет ---------- */
+  .js-anim .night { position: relative; overflow: hidden; }
+  .js-anim .night .wrap { position: relative; z-index: 1; }
+  .js-anim .night::before,
+  .js-anim .night::after {
+    content: ""; position: absolute; pointer-events: none; border-radius: 50%;
+  }
+  .js-anim .night::before {
+    width: 70vmax; height: 70vmax; right: -22vmax; top: -38vmax;
+    background: radial-gradient(circle, rgba(224,160,48,.38), transparent 60%);
+    animation: va-glow 7s ease-in-out infinite alternate;
+  }
+  .js-anim .night::after {
+    width: 40vmax; height: 40vmax; left: -15vmax; bottom: -25vmax;
+    background: radial-gradient(circle, rgba(246,240,223,.12), transparent 62%);
+    animation: va-drift 11s ease-in-out infinite alternate;
+  }
+  .js-anim .night h2 span {
+    background: linear-gradient(90deg, var(--ale) 0%, #FFE1A0 50%, var(--ale) 100%);
+    background-size: 200% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: va-shimmer 4s linear infinite;
+  }
+  .js-anim .night .btn-main { animation: va-btnglow 2.6s ease-in-out infinite; }
+
+  /* ---------- Расписание ---------- */
+  .js-anim .week li { transition-property: opacity, transform, box-shadow, background-color; }
+  .js-anim .week li.today { animation: va-today 2.4s ease-in-out infinite; }
+  @media (hover: hover) and (min-width: 860px) {
+    .js-anim .week li.va-in:hover { transform: translateY(-4px); transition-delay: 0s; }
+  }
+
+  /* ---------- Колоски в подвале покачиваются ---------- */
+  .js-anim .ears { transform-origin: 50% 100%; animation: va-sway 5s ease-in-out infinite; }
+
+  /* ---------- Нижняя панель на телефоне выезжает снизу ---------- */
+  .js-anim .dock { animation: va-dock .6s cubic-bezier(.2,.7,.2,1) 1.1s backwards; }
+
+  /* ---------- Ключевые кадры ---------- */
+  @keyframes va-kenburns { from { transform: scale(1) translate(0,0); } to { transform: scale(1.12) translate(-2%,-1.5%); } }
+  @keyframes va-up { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+  @keyframes va-fade { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes va-rise {
+    0%   { transform: translate(0,0); opacity: 0; }
+    10%  { opacity: .9; }
+    50%  { transform: translate(var(--sway,12px), -360px); }
+    90%  { opacity: .5; }
+    100% { transform: translate(0, -760px); opacity: 0; }
+  }
+  @keyframes va-wheel { 0% { transform: translateY(0); opacity: 1; } 70% { transform: translateY(18px); opacity: 0; } 100% { opacity: 0; } }
+  @keyframes va-ping { 0% { box-shadow: 0 0 0 0 rgba(111,208,140,.7); } 80%, 100% { box-shadow: 0 0 0 10px rgba(111,208,140,0); } }
+  @keyframes va-glow { from { transform: scale(.85); opacity: .6; } to { transform: scale(1.1) translate(-4%, 6%); opacity: 1; } }
+  @keyframes va-drift { from { transform: translateX(0); } to { transform: translateX(30vw); } }
+  @keyframes va-shimmer { to { background-position: -200% 0; } }
+  @keyframes va-btnglow { 0%, 100% { box-shadow: 0 0 0 0 rgba(224,160,48,0); } 50% { box-shadow: 0 0 26px 2px rgba(224,160,48,.45); } }
+  @keyframes va-today { 0%, 100% { box-shadow: 0 0 0 0 rgba(224,160,48,0); } 50% { box-shadow: 0 0 0 6px rgba(224,160,48,.25); } }
+  @keyframes va-sway { 0%, 100% { transform: rotate(-4deg); } 50% { transform: rotate(4deg); } }
+  @keyframes va-dock { from { transform: translateY(110%); } to { transform: none; } }
+</style>
 </head>
 <body>
 
@@ -301,7 +511,7 @@
     <p class="status" id="status" data-open=""><i aria-hidden="true"></i><span id="status-text">Часы работы ниже</span></p>
 
     <div class="actions">
-      <a class="btn btn-main" href="tel:+375297913625">Забронировать стол</a>
+      <a class="btn btn-main" href="https://www.instagram.com/volozhin.brewery/" target="_blank" rel="noopener">Забронировать стол</a>
       <a class="btn btn-alt" href="https://www.google.com/maps/dir/?api=1&amp;destination=%D0%9F%D0%B0%D1%80%D1%82%D0%B8%D0%B7%D0%B0%D0%BD%D1%81%D0%BA%D0%B0%D1%8F%204%D0%B0%2C%20%D0%92%D0%BE%D0%BB%D0%BE%D0%B6%D0%B8%D0%BD" target="_blank" rel="noopener">Построить маршрут</a>
     </div>
 
@@ -483,6 +693,110 @@
   }
   render();
   setInterval(render, 60000);
+})();
+</script>
+<script>
+(function () {
+  var root = document.documentElement;
+  if (!root.classList.contains('js-anim')) return;
+
+  /* Пузырьки и подсказка прокрутки на первом экране */
+  var hero = document.querySelector('.hero');
+  if (hero) {
+    var box = document.createElement('div');
+    box.className = 'va-bubbles';
+    box.setAttribute('aria-hidden', 'true');
+    var count = window.innerWidth < 860 ? 10 : 18;
+    for (var i = 0; i < count; i++) {
+      var s = document.createElement('span');
+      var size = 4 + Math.random() * 14;
+      s.style.width = s.style.height = size.toFixed(1) + 'px';
+      s.style.left = (Math.random() * 100).toFixed(1) + '%';
+      s.style.animationDuration = (9 + Math.random() * 10).toFixed(1) + 's';
+      s.style.animationDelay = (-Math.random() * 18).toFixed(1) + 's';
+      s.style.setProperty('--sway', (Math.random() * 40 - 20).toFixed(0) + 'px');
+      box.appendChild(s);
+    }
+    hero.insertBefore(box, hero.firstChild);
+
+    var cue = document.createElement('a');
+    cue.className = 'va-cue';
+    cue.href = '#h-beer';
+    cue.setAttribute('aria-label', 'Листать вниз');
+    hero.appendChild(cue);
+  }
+
+  /* Полоса прогресса прокрутки */
+  var bar = document.createElement('div');
+  bar.className = 'va-progress';
+  bar.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(bar);
+  var ticking = false;
+  function updateBar() {
+    var max = root.scrollHeight - root.clientHeight;
+    var p = max > 0 ? Math.min(1, (window.pageYOffset || root.scrollTop) / max) : 0;
+    bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function () {
+    if (!ticking) { ticking = true; requestAnimationFrame(updateBar); }
+  }, { passive: true });
+  window.addEventListener('resize', updateBar);
+  updateBar();
+
+  /* Разметка для появления при прокрутке */
+  function mark(selector, type, delay) {
+    var list = document.querySelectorAll(selector);
+    for (var i = 0; i < list.length; i++) {
+      list[i].setAttribute('data-va', type);
+      if (delay) list[i].style.setProperty('--d', delay + 's');
+    }
+  }
+  function markGroup(parentSel, childSel, type, step, base) {
+    var parents = document.querySelectorAll(parentSel);
+    for (var p = 0; p < parents.length; p++) {
+      var kids = parents[p].querySelectorAll(childSel);
+      for (var k = 0; k < kids.length; k++) {
+        kids[k].setAttribute('data-va', type);
+        kids[k].style.setProperty('--d', ((base || 0) + k * step).toFixed(2) + 's');
+      }
+    }
+  }
+
+  mark('main h2', 'up');
+  markGroup('.beer .split > div, .hall .split > div, .night .wrap', 'p', 'up', .1, .1);
+  mark('.beer .tag', 'up', .3);
+  mark('.kitchen .lead2', 'up', .1);
+  markGroup('.menu-list', 'li', 'left', .08, .15);
+  mark('.lunch', 'left', .2);
+  mark('.night .actions', 'up', .35);
+  mark('figure.ph', 'img');
+  markGroup('.week', 'li', 'up', .06, 0);
+  markGroup('.cols > div:first-child', '.contact, .street, .actions, p:last-child', 'up', .08, 0);
+  mark('.map', 'zoom', .15);
+  mark('footer .wrap', 'up');
+
+  var targets = document.querySelectorAll('[data-va]');
+
+  function reveal(el) {
+    el.classList.add('va-in');
+    if (el.matches && el.matches('figure.ph')) {
+      setTimeout(function () { el.classList.add('va-done'); }, 1700);
+    }
+  }
+
+  if (!('IntersectionObserver' in window)) {
+    for (var t = 0; t < targets.length; t++) reveal(targets[t]);
+    return;
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) { reveal(e.target); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+
+  for (var j = 0; j < targets.length; j++) io.observe(targets[j]);
 })();
 </script>
 </body>
