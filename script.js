@@ -15,6 +15,13 @@ const LANDINGS = [
     text: 'Лендинг пивоварни: информация, фото, звонок, маршрут',
     path: 'vol.pivovarnya',
     colors: ['#3b2a8f', '#7b5cf0'],
+  },
+  {
+    title: 'Свадебный фотограф',
+    niche: 'Фотоиндустрия',
+    text: 'Лендинг фотобизнеса: информация, фото, звонок',
+    path: 'SvadebniyPhotograph',
+    colors: ['#fc98ffff', '#d0aa14ff'],
   }
 ];
 
