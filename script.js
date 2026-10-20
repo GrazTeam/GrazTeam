@@ -10,12 +10,11 @@ const LANDINGS = [
     colors: ['#b83a8e', '#f5c9dd']
   },
   {
-    title: 'Lending2',
-    niche: 'Скоро',
-    text: 'Здесь появится следующий проект команды.',
-    path: 'Lending2/',
+    title: 'Воложинская пивоварня',
+    niche: 'Пивоварня',
+    text: 'Лендинг пивоварни: информация, фото, звонок, маршрут',
+    path: 'vol.pivovarnya',
     colors: ['#3b2a8f', '#7b5cf0'],
-    soon: true
   }
 ];
 
