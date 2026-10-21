@@ -22,6 +22,13 @@ const LANDINGS = [
     text: 'Лендинг фотобизнеса: информация, фото, звонок',
     path: 'SvadebniyPhotograph',
     colors: ['#fc98ffff', '#d0aa14ff'],
+  },
+  {
+    title: 'Шиномонтаж',
+    niche: 'СТО центр с шиномантажем',
+    text: 'Лендинг шиномонтожа: информация, фото, звонок, маршрут',
+    path: 'Shinomontazh',
+    colors: ['#a7a1a7ff', '#101010ff'],
   }
 ];
 
