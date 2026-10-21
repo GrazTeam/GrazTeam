@@ -2,14 +2,14 @@
 // Чтобы подставить настоящие снимки, укажите src: 'photos/01.jpg'
 // Без src показывается художественная заглушка из цветов a/b.
 const PHOTOS = [
-  { cap: 'Тихое утро',       a: '#ecd3ca', b: '#b98f84' },
-  { cap: 'Первый взгляд',    a: '#c9d3bf', b: '#7f9072' },
-  { cap: 'Клятвы',           a: '#d9c7a2', b: '#8d7243' },
-  { cap: 'Танец',            a: '#cfc5de', b: '#7d6a9c' },
-  { cap: 'Прогулка',         a: '#bfd0d6', b: '#5f8795' },
-  { cap: 'Вечерний свет',    a: '#f0c9a8', b: '#b5703f' },
-  { cap: 'Родные',           a: '#e4d2c8', b: '#a07763' },
-  { cap: 'Конфетти',         a: '#e9d7ae', b: '#9b8240' }
+  { cap: 'Тихое утро', src: './images/photo1.jpg', a: '#ecd3ca', b: '#b98f84' },
+  { cap: 'Первый взгляд', src: './images/photo2.jpg', a: '#c9d3bf', b: '#7f9072' },
+  { cap: 'Клятвы', src: './images/photo3.jpg', a: '#d9c7a2', b: '#8d7243' },
+  { cap: 'Танец', src: './images/photo4.jpg', a: '#cfc5de', b: '#7d6a9c' },
+  { cap: 'Прогулка', src: './images/photo5.jpg', a: '#bfd0d6', b: '#5f8795' },
+  { cap: 'Вечерний свет', src: './images/photo6.jpg', a: '#f0c9a8', b: '#b5703f' },
+  { cap: 'Родные', src: './images/photo7.jpg', a: '#e4d2c8', b: '#a07763' },
+  { cap: 'Конфетти', src: './images/photo8.jpg', a: '#e9d7ae', b: '#9b8240' }
 ];
 const ph = (p, cls = '') => {
   const f = document.createElement('figure');
