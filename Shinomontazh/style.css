@@ -36,6 +36,27 @@ h1,h2,h3{font-family:var(--head);text-transform:uppercase;line-height:1.05}
 .btn--line:hover{background:#111;color:var(--yel)}
 @keyframes buzz{0%,92%,100%{transform:none}94%{transform:translateX(-3px) rotate(-1deg)}96%{transform:translateX(3px) rotate(1deg)}98%{transform:translateX(-2px)}}
 
+@font-face {
+    font-family: "nbrb";
+    src: url("./fonts/nbrb.woff2") format("woff2"),
+         url("./fonts/nbrb.woff") format("woff"),
+         url("./fonts/nbrb.ttf") format("truetype");
+    unicode-range: U+E901, U+42, U+59, U+4E;
+}
+
+.nbrb-icon {
+    font-family: "nbrb" !important;
+    font-style: normal;
+    font-weight: bold;    
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.nbrb-icon-byn:before {
+    content: "\e901";
+}
+
 /* hero */
 .hero{min-height:100svh;padding:120px 5vw 90px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:3vw;
   background:radial-gradient(circle at 80% 40%,#2a2c31,var(--asp) 60%);position:relative}
